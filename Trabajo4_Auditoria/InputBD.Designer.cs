@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            panel6 = new Panel();
+            button2 = new Button();
+            checkBoxAuthentication = new CheckBox();
+            button1 = new Button();
             panel4 = new Panel();
             passwordInput = new TextBox();
             label3 = new Label();
@@ -41,9 +45,8 @@
             panel2 = new Panel();
             serverNameInput = new TextBox();
             label4 = new Label();
-            button2 = new Button();
-            button1 = new Button();
             panel1.SuspendLayout();
+            panel6.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             panel5.SuspendLayout();
@@ -52,19 +55,60 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel6);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(10);
-            panel1.Size = new Size(669, 379);
+            panel1.Size = new Size(723, 422);
             panel1.TabIndex = 0;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(button2);
+            panel6.Controls.Add(checkBoxAuthentication);
+            panel6.Controls.Add(button1);
+            panel6.Dock = DockStyle.Top;
+            panel6.Location = new Point(10, 292);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(703, 125);
+            panel6.TabIndex = 10;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(451, 73);
+            button2.Name = "button2";
+            button2.Size = new Size(94, 29);
+            button2.TabIndex = 4;
+            button2.Text = "Cancelar";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // checkBoxAuthentication
+            // 
+            checkBoxAuthentication.AutoSize = true;
+            checkBoxAuthentication.Location = new Point(246, 15);
+            checkBoxAuthentication.Name = "checkBoxAuthentication";
+            checkBoxAuthentication.Size = new Size(203, 24);
+            checkBoxAuthentication.TabIndex = 9;
+            checkBoxAuthentication.Text = "SQL Server Authentication";
+            checkBoxAuthentication.UseVisualStyleBackColor = true;
+            checkBoxAuthentication.CheckedChanged += checkBoxAuthentication_CheckedChanged;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(173, 73);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 3;
+            button1.Text = "Aceptar";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // panel4
             // 
@@ -74,7 +118,7 @@
             panel4.Location = new Point(10, 223);
             panel4.Margin = new Padding(0, 0, 0, 10);
             panel4.Name = "panel4";
-            panel4.Size = new Size(649, 69);
+            panel4.Size = new Size(703, 69);
             panel4.TabIndex = 8;
             // 
             // passwordInput
@@ -101,7 +145,7 @@
             panel3.Location = new Point(10, 154);
             panel3.Margin = new Padding(0, 0, 0, 10);
             panel3.Name = "panel3";
-            panel3.Size = new Size(649, 69);
+            panel3.Size = new Size(703, 69);
             panel3.TabIndex = 7;
             // 
             // usernameInput
@@ -128,7 +172,7 @@
             panel5.Location = new Point(10, 85);
             panel5.Margin = new Padding(0, 0, 0, 10);
             panel5.Name = "panel5";
-            panel5.Size = new Size(649, 69);
+            panel5.Size = new Size(703, 69);
             panel5.TabIndex = 6;
             // 
             // DBNameInput
@@ -154,7 +198,7 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(10, 10);
             panel2.Name = "panel2";
-            panel2.Size = new Size(649, 75);
+            panel2.Size = new Size(703, 75);
             panel2.TabIndex = 5;
             // 
             // serverNameInput
@@ -173,35 +217,17 @@
             label4.TabIndex = 2;
             label4.Text = "Nombre del servidor:";
             // 
-            // button2
-            // 
-            button2.Location = new Point(395, 317);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 4;
-            button2.Text = "Cancelar";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += this.button2_Click;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(197, 317);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 3;
-            button1.Text = "Aceptar";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // InputBD
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(669, 379);
+            ClientSize = new Size(723, 422);
             Controls.Add(panel1);
             Name = "InputBD";
             Text = "Definir Servidor";
             panel1.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
@@ -230,5 +256,7 @@
         private Panel panel2;
         private TextBox serverNameInput;
         private Label label4;
+        private CheckBox checkBoxAuthentication;
+        private Panel panel6;
     }
 }

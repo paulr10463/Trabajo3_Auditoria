@@ -83,6 +83,7 @@
             cerrarBDToolStripMenuItem.Name = "cerrarBDToolStripMenuItem";
             cerrarBDToolStripMenuItem.Size = new Size(158, 26);
             cerrarBDToolStripMenuItem.Text = "Cerrar BD";
+            cerrarBDToolStripMenuItem.Click += cerrarBDToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
@@ -92,8 +93,9 @@
             // salirToolStripMenuItem
             // 
             salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            salirToolStripMenuItem.Size = new Size(158, 26);
+            salirToolStripMenuItem.Size = new Size(224, 26);
             salirToolStripMenuItem.Text = "Salir";
+            salirToolStripMenuItem.Click += salirToolStripMenuItem_Click;
             // 
             // verToolStripMenuItem
             // 
@@ -125,7 +127,7 @@
             button2.TabIndex = 3;
             button2.Text = "Chequear anomalías";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += this.button2_Click;
+            button2.Click += button2_Click;
             // 
             // MainPage
             // 
@@ -138,8 +140,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainPage";
-            Text = "Form1";
-            Load += nuevaBDToolStripMenuItem_Click;
+            Text = "Auditoría de Bases de datos";
             ((System.ComponentModel.ISupportInitialize)dataResultsGridTable).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

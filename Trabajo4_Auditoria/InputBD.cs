@@ -16,6 +16,8 @@ namespace Trabajo4_Auditoria
         public InputBD()
         {
             InitializeComponent();
+            panel3.Visible = false;
+            panel4.Visible = false;
         }
 
         public void button1_Click(object sender, EventArgs e)
@@ -24,16 +26,35 @@ namespace Trabajo4_Auditoria
             string BDName = DBNameInput.Text;
             string userName = usernameInput.Text;
             string password = passwordInput.Text;
-
-            ConnectionInfo connectionInfo = new ConnectionInfo(serverName, BDName, null, null, true);
-            ConnectionString.connectionString = connectionInfo.GetConnectionString();
-            MessageBox.Show(ConnectionString.connectionString);
-             
-        } 
+            try
+            {
+                ConnectionInfo connectionInfo = new ConnectionInfo(serverName, BDName, null, null, true);
+                ConnectionString.connectionString = connectionInfo.GetConnectionString();
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         public void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void checkBoxAuthentication_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAuthentication.Checked)
+            {
+                panel3.Visible = true;
+                panel4.Visible = true; 
+            }
+            else
+            {
+                panel3.Visible = false;
+                panel4.Visible = false;
+            }
         }
     }
 }

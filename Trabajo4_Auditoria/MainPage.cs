@@ -10,13 +10,11 @@ namespace Trabajo4_Auditoria
         public MainPage()
         {
             InitializeComponent();
-            //BDConnection _BDConnection = new BDConnection();
-            //_BDConnection.ObtenerRelacionesIntegridadReferencial();
-
         }
 
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void button1_Click(object sender, EventArgs e)
+        {
             // Define your connection string
             string connectionString = ConnectionString.connectionString;
 
@@ -68,7 +66,7 @@ namespace Trabajo4_Auditoria
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
-        
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -78,23 +76,22 @@ namespace Trabajo4_Auditoria
 
             // Define your SQL query
             string query = @"
-        SELECT 
-            OBJECT_NAME(constraint_object_id) AS constraint_name,
-            OBJECT_NAME(parent_object_id) AS parent_table,
-            col1.name AS parent_column,
-            OBJECT_NAME(referenced_object_id) AS referenced_table,
-            col2.name AS referenced_column
-        FROM 
-            sys.foreign_key_columns fkc
-        INNER JOIN 
-            sys.columns col1 ON fkc.parent_column_id = col1.column_id AND fkc.parent_object_id = col1.object_id
-        INNER JOIN 
-            sys.columns col2 ON fkc.referenced_column_id = col2.column_id AND fkc.referenced_object_id = col2.object_id
-        INNER JOIN 
-            sys.objects ON sys.objects.object_id = fkc.constraint_object_id
-        WHERE
-            OBJECT_NAME(constraint_object_id) IS NOT NULL";
+                DECLARE @constraint_name NVARCHAR(100)
+                DECLARE @sql NVARCHAR(MAX)
+                DECLARE cur_constraints CURSOR FOR
+                SELECT name
+                FROM sys.foreign_keys
+                OPEN cur_constraints
+                FETCH NEXT FROM cur_constraints INTO @constraint_name
+                WHILE @@FETCH_STATUS = 0
+                BEGIN
+                 SET @sql = 'DBCC CHECKCONSTRAINTS (''' + @constraint_name + ''')'
+                 EXEC sp_executesql @sql
 
+                 FETCH NEXT FROM cur_constraints INTO @constraint_name
+                END
+                CLOSE cur_constraints
+                DEALLOCATE cur_constraints";
             try
             {
                 // Create a new connection
@@ -126,8 +123,19 @@ namespace Trabajo4_Auditoria
 
         private void nuevaBDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputBD inputBD = new InputBD();
+            InputBD inputBD = new();
             inputBD.ShowDialog();
+        }
+
+        private void cerrarBDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConnectionString.connectionString = "";
+            MessageBox.Show("Conexión con la base de datos cerrada");
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
