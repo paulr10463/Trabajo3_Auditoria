@@ -708,10 +708,58 @@ namespace Trabajo4_Auditoria
 
         private void abrirLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //string directorio = $"{Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)}\\LOG\\";
+            //MessageBox.Show("Los logs se encuentran en: "+ directorio);
             string directorio = $"{Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)}\\LOG\\";
 
-            MessageBox.Show("Los logs se encuentran en: "+ directorio);
-            
+            string nombreArchivoSeleccionado = SeleccionarArchivoEnDirectorio(directorio);
+
+            if (nombreArchivoSeleccionado != null)
+            {
+                string rutaCompletaArchivo = Path.Combine(directorio, nombreArchivoSeleccionado);
+                string textoArchivo = LeerTextoDeArchivo(rutaCompletaArchivo);
+                ShowLog showLog = new(textoArchivo);
+                showLog.ShowDialog();
+            }
+            else
+            {
+                Console.WriteLine("Ningún archivo seleccionado.");
+            }
+        }
+
+        private string SeleccionarArchivoEnDirectorio(string directorioInicial)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            // Configurar el diálogo de apertura de archivo
+            openFileDialog.InitialDirectory = directorioInicial;
+            openFileDialog.Title = "Seleccionar archivo";
+            openFileDialog.Filter = "Todos los archivos (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            // Mostrar el cuadro de diálogo y verificar si el usuario hizo clic en "Aceptar"
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                return openFileDialog.FileName;
+            }
+
+            return null; // El usuario canceló la operación
+        }
+
+        static string LeerTextoDeArchivo(string rutaArchivo)
+        {
+            try
+            {
+                // Lee todo el texto del archivo y lo devuelve como una cadena
+                string texto = File.ReadAllText(rutaArchivo);
+                return texto;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al leer el archivo: " + ex.Message);
+                return null;
+            }
         }
 
     }
