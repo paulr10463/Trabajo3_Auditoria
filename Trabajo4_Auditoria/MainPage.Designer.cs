@@ -134,6 +134,12 @@
             panel1.AutoScroll = true;
             panel1.BackColor = Color.DimGray;
             panel1.Dock = DockStyle.Bottom;
+
+            panel1.Location = new Point(0, 157);
+            panel1.Name = "panel1";
+            panel1.Padding = new Padding(40, 0, 40, 0);
+            panel1.Size = new Size(1664, 678);
+
             panel1.Location = new Point(0, 202);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(40, 40, 40, 0);

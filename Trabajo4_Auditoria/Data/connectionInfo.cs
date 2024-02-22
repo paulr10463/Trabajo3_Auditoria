@@ -21,8 +21,8 @@ namespace Trabajo4_Auditoria.Data
         {
             this.serverName = serverName;
             this.dbName = dBName;
-            this.password = password!=null?password:"";
-            this.username = username != null ? username : "";
+            this.password = password ?? "";
+            this.username = username ?? "";
             this.isWindowsAuth = isWindowsAuth;
         }
         public string GetConnectionString()
