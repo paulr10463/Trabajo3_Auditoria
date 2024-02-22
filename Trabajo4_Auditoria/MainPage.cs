@@ -1,13 +1,7 @@
 using System.Data.SqlClient;
 using System.Data;
-using System.Windows.Forms;
 using Trabajo4_Auditoria.Data;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using System.Xml.Linq;
-using Trabajo4_Auditoria.Utils;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Drawing;
+
 
 namespace Trabajo4_Auditoria
 {
@@ -16,7 +10,6 @@ namespace Trabajo4_Auditoria
         public MainPage()
         {
             InitializeComponent();
-            ConnectionString.connectionString = "Data Source=LAPTOPPAUL\\SQLEXPRESS;Initial Catalog=pubs; Integrated Security=True";
         }
 
 
