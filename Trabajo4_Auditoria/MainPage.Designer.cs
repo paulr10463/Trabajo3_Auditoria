@@ -34,8 +34,6 @@
             cerrarBDToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             salirToolStripMenuItem = new ToolStripMenuItem();
-            verToolStripMenuItem = new ToolStripMenuItem();
-            guardarToolStripMenuItem = new ToolStripMenuItem();
             button1 = new Button();
             button2 = new Button();
             panel1 = new Panel();
@@ -48,6 +46,7 @@
             button9 = new Button();
             button12 = new Button();
             panel2 = new Panel();
+            abrirLogToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -55,7 +54,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, verToolStripMenuItem, guardarToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, abrirLogToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1864, 28);
@@ -72,40 +71,28 @@
             // nuevaBDToolStripMenuItem
             // 
             nuevaBDToolStripMenuItem.Name = "nuevaBDToolStripMenuItem";
-            nuevaBDToolStripMenuItem.Size = new Size(158, 26);
+            nuevaBDToolStripMenuItem.Size = new Size(224, 26);
             nuevaBDToolStripMenuItem.Text = "Nueva BD";
             nuevaBDToolStripMenuItem.Click += nuevaBDToolStripMenuItem_Click;
             // 
             // cerrarBDToolStripMenuItem
             // 
             cerrarBDToolStripMenuItem.Name = "cerrarBDToolStripMenuItem";
-            cerrarBDToolStripMenuItem.Size = new Size(158, 26);
+            cerrarBDToolStripMenuItem.Size = new Size(224, 26);
             cerrarBDToolStripMenuItem.Text = "Cerrar BD";
             cerrarBDToolStripMenuItem.Click += cerrarBDToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(155, 6);
+            toolStripSeparator1.Size = new Size(221, 6);
             // 
             // salirToolStripMenuItem
             // 
             salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            salirToolStripMenuItem.Size = new Size(158, 26);
+            salirToolStripMenuItem.Size = new Size(224, 26);
             salirToolStripMenuItem.Text = "Salir";
             salirToolStripMenuItem.Click += salirToolStripMenuItem_Click;
-            // 
-            // verToolStripMenuItem
-            // 
-            verToolStripMenuItem.Name = "verToolStripMenuItem";
-            verToolStripMenuItem.Size = new Size(44, 24);
-            verToolStripMenuItem.Text = "Ver";
-            // 
-            // guardarToolStripMenuItem
-            // 
-            guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            guardarToolStripMenuItem.Size = new Size(76, 24);
-            guardarToolStripMenuItem.Text = "Guardar";
             // 
             // button1
             // 
@@ -134,12 +121,6 @@
             panel1.AutoScroll = true;
             panel1.BackColor = Color.DimGray;
             panel1.Dock = DockStyle.Bottom;
-
-            panel1.Location = new Point(0, 157);
-            panel1.Name = "panel1";
-            panel1.Padding = new Padding(40, 0, 40, 0);
-            panel1.Size = new Size(1664, 678);
-
             panel1.Location = new Point(0, 202);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(40, 40, 40, 0);
@@ -252,6 +233,13 @@
             panel2.Size = new Size(1128, 131);
             panel2.TabIndex = 15;
             // 
+            // abrirLogToolStripMenuItem
+            // 
+            abrirLogToolStripMenuItem.Name = "abrirLogToolStripMenuItem";
+            abrirLogToolStripMenuItem.Size = new Size(85, 24);
+            abrirLogToolStripMenuItem.Text = "Abrir Log";
+            abrirLogToolStripMenuItem.Click += abrirLogToolStripMenuItem_Click;
+            // 
             // MainPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -278,8 +266,6 @@
         private ToolStripMenuItem cerrarBDToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem salirToolStripMenuItem;
-        private ToolStripMenuItem verToolStripMenuItem;
-        private ToolStripMenuItem guardarToolStripMenuItem;
         private Button button1;
         private Button button2;
         private Panel panel1;
@@ -292,5 +278,6 @@
         private Button button9;
         private Button button12;
         private Panel panel2;
+        private ToolStripMenuItem abrirLogToolStripMenuItem;
     }
 }

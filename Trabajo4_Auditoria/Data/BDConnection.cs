@@ -36,7 +36,7 @@ namespace Trabajo4_Auditoria.Data
                 }
                 return foreignKeyListNames;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 // Ocurrió un error al intentar establecer la conexión
                 Console.WriteLine("Error al conectar a la base de datos: " + ex.Message);

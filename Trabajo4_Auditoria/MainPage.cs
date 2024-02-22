@@ -1,6 +1,7 @@
 using System.Data.SqlClient;
 using System.Data;
 using Trabajo4_Auditoria.Data;
+using System.Diagnostics;
 
 
 namespace Trabajo4_Auditoria
@@ -53,7 +54,7 @@ namespace Trabajo4_Auditoria
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
                         string logMessage = "Resultado de la identificación de integridad referencial";
-                        AddGridTableInResults(adapter); 
+                        AddGridTableInResults(adapter);
                         LogDataTable(adapter, logMessage);
                     }
                 }
@@ -103,6 +104,8 @@ namespace Trabajo4_Auditoria
             // Define your connection string
             string connectionString = ConnectionString.connectionString;
             List<string> fkNames = BDConnection.GetForeignKeyNames();
+            if (fkNames == null)
+                return;
             foreach (string fkName in fkNames)
             {
                 string query = @"
@@ -501,7 +504,7 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
-                        string logMessage = "Resultado de monitorear valores repetidos: " ;
+                        string logMessage = "Resultado de monitorear valores repetidos: ";
                         AddGridTableInResults(adapter);
                         LogDataTable(adapter, logMessage);
                     }
@@ -701,6 +704,14 @@ namespace Trabajo4_Auditoria
                 MessageBox.Show("Error: " + ex.Message);
                 Logs.LOG("Error al chequear Triggers" + ex.Message);
             }
+        }
+
+        private void abrirLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string directorio = $"{Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)}\\LOG\\";
+
+            MessageBox.Show("Los logs se encuentran en: "+ directorio);
+            
         }
 
     }
