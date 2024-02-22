@@ -2,6 +2,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
 using Trabajo4_Auditoria.Data;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Xml.Linq;
 
 namespace Trabajo4_Auditoria
 {
@@ -10,7 +12,6 @@ namespace Trabajo4_Auditoria
         public MainPage()
         {
             InitializeComponent();
-            
         }
 
 
@@ -574,6 +575,82 @@ namespace Trabajo4_Auditoria
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            // Define your connection string
+            string connectionString = ConnectionString.connectionString;
+
+            string query = @"SELECT
+                obj.name AS TriggerName,
+                schema_name(tab.schema_id) AS SchemaName,
+                tab.name AS TableName,
+                m.definition AS TriggerDefinition
+            FROM
+                sys.triggers AS tr
+            INNER JOIN
+                sys.objects AS obj ON tr.object_id = obj.object_id
+            INNER JOIN
+                sys.tables AS tab ON tr.parent_id = tab.object_id
+            INNER JOIN
+                sys.schemas AS sch ON tab.schema_id = sch.schema_id
+            INNER JOIN
+                sys.sql_modules AS m ON tr.object_id = m.object_id
+            WHERE
+                tr.is_ms_shipped = 0; ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                    {
+                        // Crear una lista de filas para guardar los resultados
+                        List<string[]> rows = new List<string[]>();
+
+                        // Llenar un DataTable con los resultados de la consulta
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Iterar sobre cada fila del DataTable
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            // Crear un arreglo para guardar los valores de cada columna de la fila
+                            string[] values = new string[dataTable.Columns.Count];
+
+                            // Iterar sobre cada columna de la fila y guardar su valor en el arreglo
+                            for (int i = 0; i < dataTable.Columns.Count; i++)
+                            {
+                                values[i] = row[i].ToString();
+                            }
+
+                            // Agregar el arreglo de valores a la lista de filas
+                            rows.Add(values);
+                        }
+
+                        // Mostrar los resultados en la consola (para verificar)
+                        foreach (var row in rows)
+                        {
+                            foreach (var value in row)
+                            {
+                                Console.Write(value + "\t");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
 
         }
     }
