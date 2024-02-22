@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -29,8 +30,24 @@ namespace Trabajo4_Auditoria
             try
             {
                 ConnectionInfo connectionInfo = new ConnectionInfo(serverName, BDName, null, null, true);
-                ConnectionString.connectionString = connectionInfo.GetConnectionString();
-                this.Hide();
+                
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionInfo.GetConnectionString()))
+                    {
+                        connection.Open();
+                        Console.WriteLine("¡Conexión exitosa!");
+                    }
+                    ConnectionString.connectionString = connectionInfo.GetConnectionString();
+                    MessageBox.Show("Se realizó correctamente la conexión con la base de datos");
+                    this.Hide();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al conectar a la base de datos: " + ex.Message);
+                    MessageBox.Show("No se pudo conectar con la base de datos");
+                }
+
             }
             catch (Exception ex)
             {
