@@ -53,16 +53,35 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
-                        AddGridTableInResults(adapter);
+                        string logMessage = "Resultado de la identificación de integridad referencial";
+                        AddGridTableInResults(adapter); 
+                        LogDataTable(adapter, logMessage);
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error durante la identificación de la integridad referencial" + ex.Message);
             }
 
         }
+        private void LogDataTable(SqlDataAdapter adapter, string logMessage)
+        {
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+            string message = logMessage + "\n";
+            foreach (DataRow row in table.Rows)
+            {
+                foreach (DataColumn col in table.Columns)
+                {
+                    message += $"{col.ColumnName}: {row[col]}\n";
+                }
+                message += "\n";
+            }
+            Logs.LOG(message);
+        }
+
 
         private void AddGridTableInResults(SqlDataAdapter adapter)
         {
@@ -118,6 +137,8 @@ namespace Trabajo4_Auditoria
                                 };
                                 panel1.Controls.Add(dataGridView);
                             }
+                            string logMessage = "Resultado de chequear anomalias: ";
+                            LogDataTable(adapter, logMessage);
                         }
                     }
                 }
@@ -187,7 +208,9 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de anomalias que no dependen de los datos ";
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
                     }
                 }
             }
@@ -228,7 +251,9 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de extraer las claves primarias: ";
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
                     }
                 }
             }
@@ -297,7 +322,10 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de la identificacion  del tipo de dato en clave primaria y clave foranea sean compatibles: ";
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
+
                     }
                 }
             }
@@ -386,7 +414,9 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de revisar valores nulos en Claves Primarias: ";
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
                     }
                 }
             }
@@ -466,7 +496,9 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de monitorear valores repetidos: " ;
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
                     }
                 }
             }
@@ -538,7 +570,10 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de detectar valores nulos o repetidos: ";
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
+
                     }
                 }
             }
@@ -566,7 +601,9 @@ namespace Trabajo4_Auditoria
                     // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
+                        string logMessage = "Resultado de revisar claves foraneas desactivadas: ";
                         AddGridTableInResults(adapter);
+                        LogDataTable(adapter, logMessage);
                     }
                 }
             }

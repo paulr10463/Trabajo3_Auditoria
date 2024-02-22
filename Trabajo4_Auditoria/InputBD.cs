@@ -30,28 +30,31 @@ namespace Trabajo4_Auditoria
             try
             {
                 ConnectionInfo connectionInfo = new ConnectionInfo(serverName, BDName, null, null, true);
-                
+
                 try
                 {
                     using (SqlConnection connection = new SqlConnection(connectionInfo.GetConnectionString()))
                     {
                         connection.Open();
                         Console.WriteLine("¡Conexión exitosa!");
+                        Logs.LOG("Conexión exitosa en la base de datos " + BDName);
                     }
                     ConnectionString.connectionString = connectionInfo.GetConnectionString();
                     MessageBox.Show("Se realizó correctamente la conexión con la base de datos");
-                    this.Hide();
+                    this.Hide();    
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error al conectar a la base de datos: " + ex.Message);
                     MessageBox.Show("No se pudo conectar con la base de datos");
+                    Logs.LOG("Conexión fallida con la base de datos " + BDName);
                 }
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                Logs.LOG("Error durante la conexion");
             }
         }
 
