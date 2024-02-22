@@ -535,9 +535,9 @@ namespace Trabajo4_Auditoria
                 DECLARE FK_Columns CURSOR FOR
                 SELECT 
                     fk.name AS 'Nombre_FK',
-                    OBJECT_NAME(fk.parent_object_id) AS 'Tabla_Origen',
+                    QUOTENAME(SCHEMA_NAME(parent_object.schema_id)) + '.' + OBJECT_NAME(fk.parent_object_id) AS 'Tabla_Origen',
                     c1.name AS 'Columna_Origen',
-                    OBJECT_NAME(fk.referenced_object_id) AS 'Tabla_Destino',
+                    QUOTENAME(SCHEMA_NAME(referenced_object.schema_id)) + '.' + OBJECT_NAME(fk.referenced_object_id) AS 'Tabla_Destino',
                     c2.name AS 'Columna_Destino'
                 FROM 
                     sys.foreign_keys AS fk
@@ -546,7 +546,11 @@ namespace Trabajo4_Auditoria
                 INNER JOIN 
                     sys.columns AS c1 ON fkc.parent_object_id = c1.object_id AND fkc.parent_column_id = c1.column_id
                 INNER JOIN 
-                    sys.columns AS c2 ON fkc.referenced_object_id = c2.object_id AND fkc.referenced_column_id = c2.column_id;
+                    sys.columns AS c2 ON fkc.referenced_object_id = c2.object_id AND fkc.referenced_column_id = c2.column_id
+                INNER JOIN 
+                    sys.tables AS parent_object ON fk.parent_object_id = parent_object.object_id
+                INNER JOIN 
+                    sys.tables AS referenced_object ON fk.referenced_object_id = referenced_object.object_id;
 
                 CREATE TABLE #FK_NullRecords (FKName NVARCHAR(128), ParentTableName NVARCHAR(128), ParentPK NVARCHAR(MAX), ReferencedTableName NVARCHAR(128), ReferencedColumnName NVARCHAR(128))
 
