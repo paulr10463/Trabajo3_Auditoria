@@ -632,38 +632,41 @@ namespace Trabajo4_Auditoria
             string connectionString = ConnectionString.connectionString;
 
             string query = @"DECLARE @fkName NVARCHAR(128)
-        DECLARE @parentTable NVARCHAR(128)
-        DECLARE @parentColumn NVARCHAR(128)
-        DECLARE @referencedTable NVARCHAR(128)
-        DECLARE @referencedColumn NVARCHAR(128)
-        DECLARE fk_cursor CURSOR FOR
-        SELECT
-        OBJECT_NAME(fkc.constraint_object_id) AS fk_name,
-        OBJECT_NAME(fkc.parent_object_id) AS parent_table,
-        COL_NAME(fkc.parent_object_id, fkc.parent_column_id) AS parent_column,
-        OBJECT_NAME(fkc.referenced_object_id) AS referenced_table,
-        COL_NAME(fkc.referenced_object_id, fkc.referenced_column_id) AS
-        referenced_column
-        FROM sys.foreign_key_columns AS fkc
-        INNER JOIN sys.tables AS t ON fkc.parent_object_id = t.object_id
-        WHERE t.type = 'U'
-        OPEN fk_cursor
-        FETCH NEXT FROM fk_cursor INTO @fkName, @parentTable, @parentColumn,
-        @referencedTable, @referencedColumn
-        WHILE @@FETCH_STATUS = 0
-        BEGIN
-        DECLARE @sql NVARCHAR(MAX)
-        SET @sql = '
-        SELECT*
-        FROM ' + @parentTable + '
-        WHERE ' + @parentColumn + ' NOT IN(SELECT ' + @referencedColumn +
-        ' FROM ' + @referencedTable + ') OR ' + @parentColumn + ' IS NULL ';
+                DECLARE @parentTable NVARCHAR(128)
+                DECLARE @parentColumn NVARCHAR(128)
+                DECLARE @referencedTable NVARCHAR(128)
+                DECLARE @referencedColumn NVARCHAR(128)
+
+                DECLARE fk_cursor CURSOR FOR
+                SELECT
+                OBJECT_NAME(fkc.constraint_object_id) AS fk_name,
+                SCHEMA_NAME(parent.schema_id) + '.' + OBJECT_NAME(fkc.parent_object_id) AS parent_table,
+                COL_NAME(fkc.parent_object_id, fkc.parent_column_id) AS parent_column,
+                SCHEMA_NAME(ref.schema_id) + '.' + OBJECT_NAME(fkc.referenced_object_id) AS referenced_table,
+                COL_NAME(fkc.referenced_object_id, fkc.referenced_column_id) AS referenced_column
+                FROM sys.foreign_key_columns AS fkc
+                INNER JOIN sys.tables AS parent ON fkc.parent_object_id = parent.object_id
+                INNER JOIN sys.tables AS ref ON fkc.referenced_object_id = ref.object_id
+                WHERE parent.type = 'U' AND ref.type = 'U'
+
+                OPEN fk_cursor
+                FETCH NEXT FROM fk_cursor INTO @fkName, @parentTable, @parentColumn, @referencedTable, @referencedColumn
+
+                WHILE @@FETCH_STATUS = 0
+                BEGIN
+                    DECLARE @sql NVARCHAR(MAX)
+                    SET @sql = '
+                    SELECT *
+                    FROM ' + @parentTable + '
+                    WHERE ' + @parentColumn + ' NOT IN (SELECT ' + @referencedColumn + ' FROM ' + @referencedTable + ') OR ' + @parentColumn + ' IS NULL '
                     EXEC sp_executesql @sql;
-                    FETCH NEXT FROM fk_cursor INTO @fkName, @parentTable, @parentColumn,
-                    @referencedTable, @referencedColumn
-        END
-        CLOSE fk_cursor
-        DEALLOCATE fk_cursor";
+
+                    FETCH NEXT FROM fk_cursor INTO @fkName, @parentTable, @parentColumn, @referencedTable, @referencedColumn
+                END
+
+                CLOSE fk_cursor
+                DEALLOCATE fk_cursor;
+                ";
             try
             {
                 // Create a new connection

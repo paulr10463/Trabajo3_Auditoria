@@ -34,6 +34,7 @@
             cerrarBDToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             salirToolStripMenuItem = new ToolStripMenuItem();
+            abrirLogToolStripMenuItem = new ToolStripMenuItem();
             button1 = new Button();
             button2 = new Button();
             panel1 = new Panel();
@@ -46,7 +47,6 @@
             button9 = new Button();
             button12 = new Button();
             panel2 = new Panel();
-            abrirLogToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -71,28 +71,35 @@
             // nuevaBDToolStripMenuItem
             // 
             nuevaBDToolStripMenuItem.Name = "nuevaBDToolStripMenuItem";
-            nuevaBDToolStripMenuItem.Size = new Size(224, 26);
+            nuevaBDToolStripMenuItem.Size = new Size(158, 26);
             nuevaBDToolStripMenuItem.Text = "Nueva BD";
             nuevaBDToolStripMenuItem.Click += nuevaBDToolStripMenuItem_Click;
             // 
             // cerrarBDToolStripMenuItem
             // 
             cerrarBDToolStripMenuItem.Name = "cerrarBDToolStripMenuItem";
-            cerrarBDToolStripMenuItem.Size = new Size(224, 26);
+            cerrarBDToolStripMenuItem.Size = new Size(158, 26);
             cerrarBDToolStripMenuItem.Text = "Cerrar BD";
             cerrarBDToolStripMenuItem.Click += cerrarBDToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(221, 6);
+            toolStripSeparator1.Size = new Size(155, 6);
             // 
             // salirToolStripMenuItem
             // 
             salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            salirToolStripMenuItem.Size = new Size(224, 26);
+            salirToolStripMenuItem.Size = new Size(158, 26);
             salirToolStripMenuItem.Text = "Salir";
             salirToolStripMenuItem.Click += salirToolStripMenuItem_Click;
+            // 
+            // abrirLogToolStripMenuItem
+            // 
+            abrirLogToolStripMenuItem.Name = "abrirLogToolStripMenuItem";
+            abrirLogToolStripMenuItem.Size = new Size(85, 24);
+            abrirLogToolStripMenuItem.Text = "Abrir Log";
+            abrirLogToolStripMenuItem.Click += abrirLogToolStripMenuItem_Click;
             // 
             // button1
             // 
@@ -211,7 +218,7 @@
             button12.Name = "button12";
             button12.Size = new Size(120, 131);
             button12.TabIndex = 14;
-            button12.Text = "Revisar integridad referencial con triggers";
+            button12.Text = "Revisar integridad referencial manualmente";
             button12.UseVisualStyleBackColor = true;
             button12.Click += button12_Click;
             // 
@@ -232,13 +239,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1128, 131);
             panel2.TabIndex = 15;
-            // 
-            // abrirLogToolStripMenuItem
-            // 
-            abrirLogToolStripMenuItem.Name = "abrirLogToolStripMenuItem";
-            abrirLogToolStripMenuItem.Size = new Size(85, 24);
-            abrirLogToolStripMenuItem.Text = "Abrir Log";
-            abrirLogToolStripMenuItem.Click += abrirLogToolStripMenuItem_Click;
             // 
             // MainPage
             // 
