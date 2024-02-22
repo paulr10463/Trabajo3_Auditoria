@@ -46,8 +46,6 @@
             button7 = new Button();
             button8 = new Button();
             button9 = new Button();
-            button10 = new Button();
-            button11 = new Button();
             button12 = new Button();
             panel2 = new Panel();
             menuStrip1.SuspendLayout();
@@ -112,7 +110,7 @@
             // button1
             // 
             button1.Dock = DockStyle.Left;
-            button1.Location = new Point(1218, 0);
+            button1.Location = new Point(1012, 0);
             button1.Name = "button1";
             button1.Size = new Size(112, 131);
             button1.TabIndex = 2;
@@ -123,11 +121,11 @@
             // button2
             // 
             button2.Dock = DockStyle.Left;
-            button2.Location = new Point(743, 0);
+            button2.Location = new Point(631, 0);
             button2.Name = "button2";
             button2.Size = new Size(105, 131);
             button2.TabIndex = 3;
-            button2.Text = "Chequear anomalías";
+            button2.Text = "Chequear anomalías (DBCC)";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -178,7 +176,7 @@
             // button6
             // 
             button6.Dock = DockStyle.Left;
-            button6.Location = new Point(942, 0);
+            button6.Location = new Point(736, 0);
             button6.Name = "button6";
             button6.Size = new Size(156, 131);
             button6.TabIndex = 8;
@@ -219,30 +217,10 @@
             button9.UseVisualStyleBackColor = true;
             button9.Click += button9_Click;
             // 
-            // button10
-            // 
-            button10.Dock = DockStyle.Left;
-            button10.Location = new Point(631, 0);
-            button10.Name = "button10";
-            button10.Size = new Size(112, 131);
-            button10.TabIndex = 12;
-            button10.Text = "Verificar anomalías no detectadas por DBCC";
-            button10.UseVisualStyleBackColor = true;
-            // 
-            // button11
-            // 
-            button11.Dock = DockStyle.Left;
-            button11.Location = new Point(848, 0);
-            button11.Name = "button11";
-            button11.Size = new Size(94, 131);
-            button11.TabIndex = 13;
-            button11.Text = "Revisar anomalias con triggers";
-            button11.UseVisualStyleBackColor = true;
-            // 
             // button12
             // 
             button12.Dock = DockStyle.Left;
-            button12.Location = new Point(1098, 0);
+            button12.Location = new Point(892, 0);
             button12.Name = "button12";
             button12.Size = new Size(120, 131);
             button12.TabIndex = 14;
@@ -256,18 +234,16 @@
             panel2.Controls.Add(button1);
             panel2.Controls.Add(button12);
             panel2.Controls.Add(button6);
-            panel2.Controls.Add(button11);
             panel2.Controls.Add(button2);
-            panel2.Controls.Add(button10);
             panel2.Controls.Add(button3);
             panel2.Controls.Add(button9);
             panel2.Controls.Add(button4);
             panel2.Controls.Add(button5);
             panel2.Controls.Add(button7);
             panel2.Controls.Add(button8);
-            panel2.Location = new Point(262, 44);
+            panel2.Location = new Point(365, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1333, 131);
+            panel2.Size = new Size(1128, 131);
             panel2.TabIndex = 15;
             // 
             // MainPage
@@ -308,8 +284,6 @@
         private Button button7;
         private Button button8;
         private Button button9;
-        private Button button10;
-        private Button button11;
         private Button button12;
         private Panel panel2;
     }

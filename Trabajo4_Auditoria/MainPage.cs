@@ -4,6 +4,10 @@ using System.Windows.Forms;
 using Trabajo4_Auditoria.Data;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using System.Xml.Linq;
+using Trabajo4_Auditoria.Utils;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Trabajo4_Auditoria
 {
@@ -12,6 +16,7 @@ namespace Trabajo4_Auditoria
         public MainPage()
         {
             InitializeComponent();
+            ConnectionString.connectionString = "Data Source=LAPTOPPAUL\\SQLEXPRESS;Initial Catalog=pubs; Integrated Security=True";
         }
 
 
@@ -584,61 +589,68 @@ namespace Trabajo4_Auditoria
             // Define your connection string
             string connectionString = ConnectionString.connectionString;
 
-            string query = @"SELECT
-                obj.name AS TriggerName,
-                schema_name(tab.schema_id) AS SchemaName,
-                tab.name AS TableName,
-                m.definition AS TriggerDefinition
-            FROM
-                sys.triggers AS tr
-            INNER JOIN
-                sys.objects AS obj ON tr.object_id = obj.object_id
-            INNER JOIN
-                sys.tables AS tab ON tr.parent_id = tab.object_id
-            INNER JOIN
-                sys.schemas AS sch ON tab.schema_id = sch.schema_id
-            INNER JOIN
-                sys.sql_modules AS m ON tr.object_id = m.object_id
-            WHERE
-                tr.is_ms_shipped = 0; ";
+            string query = @"DECLARE @fkName NVARCHAR(128)
+        DECLARE @parentTable NVARCHAR(128)
+        DECLARE @parentColumn NVARCHAR(128)
+        DECLARE @referencedTable NVARCHAR(128)
+        DECLARE @referencedColumn NVARCHAR(128)
+        DECLARE fk_cursor CURSOR FOR
+        SELECT
+        OBJECT_NAME(fkc.constraint_object_id) AS fk_name,
+        OBJECT_NAME(fkc.parent_object_id) AS parent_table,
+        COL_NAME(fkc.parent_object_id, fkc.parent_column_id) AS parent_column,
+        OBJECT_NAME(fkc.referenced_object_id) AS referenced_table,
+        COL_NAME(fkc.referenced_object_id, fkc.referenced_column_id) AS
+        referenced_column
+        FROM sys.foreign_key_columns AS fkc
+        INNER JOIN sys.tables AS t ON fkc.parent_object_id = t.object_id
+        WHERE t.type = 'U'
+        OPEN fk_cursor
+        FETCH NEXT FROM fk_cursor INTO @fkName, @parentTable, @parentColumn,
+        @referencedTable, @referencedColumn
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+        DECLARE @sql NVARCHAR(MAX)
+        SET @sql = '
+        SELECT*
+        FROM ' + @parentTable + '
+        WHERE ' + @parentColumn + ' NOT IN(SELECT ' + @referencedColumn +
+        ' FROM ' + @referencedTable + ') OR ' + @parentColumn + ' IS NULL ';
+                    EXEC sp_executesql @sql;
+                    FETCH NEXT FROM fk_cursor INTO @fkName, @parentTable, @parentColumn,
+                    @referencedTable, @referencedColumn
+        END
+        CLOSE fk_cursor
+        DEALLOCATE fk_cursor";
             try
             {
+                // Create a new connection
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    // Open the connection
                     connection.Open();
+
+                    // Create a new SqlDataAdapter to fetch the data
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                     {
-                        // Crear una lista de filas para guardar los resultados
-                        List<string[]> rows = new List<string[]>();
+                        // Create a DataSet to hold the results of all queries
+                        DataSet dataSet = new DataSet();
+                        adapter.Fill(dataSet);
 
-                        // Llenar un DataTable con los resultados de la consulta
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-
-                        // Iterar sobre cada fila del DataTable
-                        foreach (DataRow row in dataTable.Rows)
+                        // Iterate over each DataTable in the DataSet
+                        foreach (DataTable table in dataSet.Tables)
                         {
-                            // Crear un arreglo para guardar los valores de cada columna de la fila
-                            string[] values = new string[dataTable.Columns.Count];
-
-                            // Iterar sobre cada columna de la fila y guardar su valor en el arreglo
-                            for (int i = 0; i < dataTable.Columns.Count; i++)
+                            if (table.Rows.Count > 0)
                             {
-                                values[i] = row[i].ToString();
+                                DataGridView dataGridView = new DataGridView()
+                                {
+                                    DataSource = table,
+                                    Dock = DockStyle.Top,
+                                    AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                                    Height = (table.Rows.Count + 2) * 30
+                                };
+                                panel1.Controls.Add(dataGridView);
                             }
-
-                            // Agregar el arreglo de valores a la lista de filas
-                            rows.Add(values);
-                        }
-
-                        // Mostrar los resultados en la consola (para verificar)
-                        foreach (var row in rows)
-                        {
-                            foreach (var value in row)
-                            {
-                                Console.Write(value + "\t");
-                            }
-                            Console.WriteLine();
                         }
                     }
                 }
@@ -649,9 +661,5 @@ namespace Trabajo4_Auditoria
             }
         }
 
-        private void button13_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
