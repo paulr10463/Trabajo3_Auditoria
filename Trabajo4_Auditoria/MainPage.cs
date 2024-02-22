@@ -151,6 +151,7 @@ namespace Trabajo4_Auditoria
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: " + ex.Message);
+                    Logs.LOG("Error durante el chequeo de anomalias" + ex.Message);
                 }
             }
         }
@@ -223,6 +224,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error de anomalias que no dependen de los datos" + ex.Message);
             }
         }
 
@@ -266,6 +268,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error al extraer las claves primarias" + ex.Message);
             }
         }
 
@@ -338,6 +341,8 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error durante la identificacion  del tipo de dato en clave primaria y clave foranea sean compatibles" + ex.Message);
+
             }
         }
 
@@ -429,6 +434,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error al revisar valores nulos en Claves Primarias" + ex.Message);
             }
         }
 
@@ -511,6 +517,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error al monitorear valores repetidos" + ex.Message);
             }
         }
 
@@ -586,6 +593,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error al detectar valores nulos o repetidos" + ex.Message);
             }
         }
 
@@ -616,6 +624,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error al revisar claves foraneas desactivadas" + ex.Message);
             }
 
         }
@@ -687,6 +696,8 @@ namespace Trabajo4_Auditoria
                                     Height = (table.Rows.Count + 2) * 30
                                 };
                                 panel1.Controls.Add(dataGridView);
+                                string logMessage = "Resultado de chequear Triggers: ";
+                                LogDataTable(adapter, logMessage);
                             }
                         }
                     }
@@ -695,6 +706,7 @@ namespace Trabajo4_Auditoria
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Logs.LOG("Error al chequear Triggers" + ex.Message);
             }
         }
 
